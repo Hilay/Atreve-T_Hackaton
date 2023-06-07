@@ -1,8 +1,6 @@
 import React from "react";
 
-function TableG({data}) {
-  var camp = data;
-  console.log(camp);
+function TableG() {
   return (
     <>
       <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
@@ -30,10 +28,10 @@ function TableG({data}) {
           <tbody>
             {/* {camp.map((campaign) => { */}
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">{/* {campaign.campaignName} */}</td>
+                <td class="px-6 py-4">nombre</td>
                 <td class="px-6 py-4">
                   <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-                    {/* {campaign.status} */}
+                    active
                   </span>
                 </td>
                 <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
@@ -45,8 +43,8 @@ function TableG({data}) {
                     />
                   </div>
                 </th>
-                <td class="px-6 py-4">{/* {campaign.startDate} */}</td>
-                <td class="px-6 py-4">{/* {campaign.endDate} */}</td>
+                <td class="px-6 py-4">aaaa</td>
+                <td class="px-6 py-4">bbbb</td>
                 <td class="px-6 py-4">
                   <div class="flex justify-end gap-4">
                     <a x-data="{ tooltip: 'Delete' }" href="#">
