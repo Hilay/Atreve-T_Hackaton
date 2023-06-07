@@ -1,8 +1,57 @@
-import React from "react";
+'use client';
+import React, { useState } from "react";
+
 
 function CampForm() {
+  const [formValues, setFormValues] = useState({
+    idCampaign: 8,
+    idInstitution: 3,
+    nombreCampaña: "",
+    descripcion: "",
+    tipoBeneficiario: "",
+    startDate: "",
+    endDate: "",
+    status: "active"
+    // Agrega más campos aquí según sea necesario
+  });
+
+  // Función para manejar cambios en los campos del formulario
+  const handleChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Función para manejar el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Enviar los datos a la base de datos
+    fetch("http://localhost:3000/api/campaigns/create/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        confirm("pisitivo");
+        // Realizar acciones después de enviar los datos a la base de datos
+        console.log("Datos enviados exitosamente:", data);
+        // Restablecer los valores del formulario si es necesario
+        
+      })
+      .catch((error) => {
+        confirm("algo salio mal");
+        console.error("Error al enviar los datos:", error);
+        // Manejar el error de acuerdo a tus necesidades
+      });
+  };
+    
   return (
     <form class="pb-10 pt-10 flex flex-col items-center justify-center bg-white">
+      onSubmit={handleSubmit}
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">
@@ -23,9 +72,10 @@ function CampForm() {
               <div class="mt-2">
                 <input
                   type="text"
-                  name="street-address"
-                  id="street-address"
-                  autocomplete="street-address"
+                  name="nombreCampaña"
+                  id="nombreCampaña"
+                  value={formValues.nombreCampaña}
+                  onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -40,9 +90,10 @@ function CampForm() {
               </label>
               <div class="mt-2">
                 <textarea
-                  id="email"
-                  name="email"
-                  autocomplete="email"
+                  id="descripcion"
+                  name="descripcion"
+                  value={formValues.descripcion}
+                  onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -57,10 +108,10 @@ function CampForm() {
               </label>
               <div class="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
+                  id="tipoBeneficiario"
+                  name="tipoBeneficiario"
+                  value={formValues.tipoBeneficiario}
+                  onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -119,8 +170,10 @@ function CampForm() {
               <div class="mt-2">
                 <input
                   type="date"
-                  name="region"
-                  id="region"
+                  name="startDate"
+                  id="startDate"
+                  value={formValues.startDate}
+                  onChange={handleChange}
                   autocomplete="address-level1"
                   class="pl-3 pr-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -137,8 +190,10 @@ function CampForm() {
               <div class="mt-2">
                 <input
                   type="date"
-                  name="postal-code"
-                  id="postal-code"
+                  name="endDate"
+                  id="endDate"
+                  value={formValues.endDate}
+                  onChange={handleChange}
                   autocomplete="postal-code"
                   class="pl-3 pr-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
