@@ -8,6 +8,11 @@ function CampaignsTable() {
   const [campaigns, setCampaigns] = useState([]);
 
   useEffect(() => {
+    fetch("http://localhost:3000/api/campaigns/closed/closed")
+    .then((response) => response.json())
+    .then((data) => {
+      setCampaigns(data);
+    })
     
   }, [campaigns]);
   
