@@ -43,7 +43,7 @@ function TableG({ dataC }) {
                   <div className="relative h-10 w-10">
                     <img
                       className="h-full w-full rounded-full object-cover object-center"
-                      src="https://cdn-icons-png.flaticon.com/512/6193/6193914.png"
+                      src={`https://firebasestorage.googleapis.com/v0/b/fuerza-g-32ca5.appspot.com/o/${campaign.idCampaign}.jpg?alt=media`}
                       alt=""
                     />
                   </div>

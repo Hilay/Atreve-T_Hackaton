@@ -1,19 +1,22 @@
 'use client';
 import React, { useState } from "react";
-
+import { storage } from "../../lib/firebase.js";
+import { ref, uploadBytes } from "firebase/storage";
 
 function CampForm() {
   const [formValues, setFormValues] = useState({
-    idCampaign: 9,
+    idCampaign: 11,
     idInstitution: 3,
     campaignName: "",
     description: "",
     beneficiaryType: "",
     startDate: "",
     endDate: "",
-    status: "active"
+    status: "active",
     // Agrega más campos aquí según sea necesario
   });
+
+  const [selectedImage, setSelectedImage] = useState(null);
 
   // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
@@ -23,10 +26,16 @@ function CampForm() {
     });
   };
 
+  // Función para manejar el cambio de imagen seleccionada
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
+
   // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Enviar los datos a la base de datos
+
     fetch("http://localhost:3000/api/campaigns/create/create", {
       method: "POST",
       headers: {
@@ -36,22 +45,22 @@ function CampForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        confirm("pisitivo");
-        // Realizar acciones después de enviar los datos a la base de datos
         console.log("Datos enviados exitosamente:", data);
-        // Restablecer los valores del formulario si es necesario
-        
+        const imageRef = ref(storage, `${formValues.idCampaign}.jpg`);
+        uploadBytes(imageRef, selectedImage);
+        confirm("Imagen subida");
       })
       .catch((error) => {
-        confirm("algo salio mal");
+        confirm(error.message);
         console.error("Error al enviar los datos:", error);
-        // Manejar el error de acuerdo a tus necesidades
       });
   };
-    
+
   return (
-    <form class="pb-10 pt-10 flex flex-col items-center justify-center bg-white" onSubmit={handleSubmit}>
-      
+    <form
+      class="pb-10 pt-10 flex flex-col items-center justify-center bg-white"
+      onSubmit={handleSubmit}
+    >
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">
@@ -138,24 +147,20 @@ function CampForm() {
                       clip-rule="evenodd"
                     />
                   </svg>
-                  <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      for="file-upload"
-                      class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        class="pl-3 sr-only"
-                      />
-                    </label>
-                    <p class="pl-1">or drag and drop</p>
-                  </div>
-                  <p class="text-xs leading-5 text-gray-600">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
+                  <label
+                    for="file-upload"
+                    class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                  >
+                    <span>Upload a file</span>
+                    <input
+                      id="file-upload"
+                      name="file-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      class="pl-3 sr-only"
+                    />
+                  </label>
                 </div>
               </div>
             </div>
