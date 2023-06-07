@@ -8,13 +8,15 @@ function CampaignsTable() {
   const [campaigns, setCampaigns] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/campaigns/closed/closed")
-    .then((response) => response.json())
-    .then((data) => {
-      setCampaigns(data);
-    })
-    
-  }, [campaigns]);
+    if (typeof window !== "undefined") {
+      fetch("http://localhost:3000/api/campaigns/active/active")
+        .then((response) => response.json())
+        .then((data) => {
+          setCampaigns(data);
+        });
+    }
+  }, []);
+  
   
   return (
     <div>
@@ -39,7 +41,7 @@ function CampaignsTable() {
       </a>
 
       {/* CampaignTables */}
-      <TableC/>
+      <TableC dataC={campaigns}/>
     </div>
   );
 }

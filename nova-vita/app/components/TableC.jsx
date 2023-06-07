@@ -1,90 +1,97 @@
 import React from "react";
 
-function TableG() {
+function TableG({ dataC }) {
+  console.log(dataC);
   return (
     <>
-      <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
-        <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
-          <thead class="bg-gray-50">
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
+        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
+          <thead className="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
                 Nombre Campaña
               </th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900">
-                Requerimiento
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                Descripcion
               </th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900">
-                Imagenes
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                Imagen
               </th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                Tipo de Beneficiario
+              </th>
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                Estado
+              </th>
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
                 Fecha Inicio
               </th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
                 Fecha Fin
               </th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
+              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                Acciones
+              </th>
             </tr>
           </thead>
           <tbody>
-            {/* {camp.map((campaign) => { */}
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">nombre</td>
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-                    active
-                  </span>
-                </td>
-                <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
-                  <div class="relative h-10 w-10">
+            {dataC.map((campaign) => (
+              <tr className="hover:bg-gray-50" key={campaign}>
+                <td className="px-6 py-4">{campaign.campaignName}</td>
+                <td className="px-6 py-4">{campaign.description}</td>
+                <td className="flex gap-3 px-6 py-4 font-normal text-gray-900">
+                  <div className="relative h-10 w-10">
                     <img
-                      class="h-full w-full rounded-full object-cover object-center"
-                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      className="h-full w-full rounded-full object-cover object-center"
+                      src="https://cdn-icons-png.flaticon.com/512/6193/6193914.png"
                       alt=""
                     />
                   </div>
-                </th>
-                <td class="px-6 py-4">aaaa</td>
-                <td class="px-6 py-4">bbbb</td>
-                <td class="px-6 py-4">
-                  <div class="flex justify-end gap-4">
-                    <a x-data="{ tooltip: 'Delete' }" href="#">
+                </td>
+                <td className="px-6 py-4">{campaign.description}</td>
+                <td className="px-6 py-4">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                    {campaign.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4">{campaign.startDate.slice(0, 10)}</td>
+                <td className="px-6 py-4">{campaign.endDate.slice(0, 10)}</td>
+                <td class="py-3 px-6 text-center">
+                  <div class="flex item-center justify-center">
+                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
                         stroke="currentColor"
-                        class="h-6 w-6"
-                        x-tooltip="tooltip"
                       >
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          stroke-width="2"
+                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                         />
                       </svg>
-                    </a>
-                    <a x-data="{ tooltip: 'Edite' }" href="#">
+                    </div>
+                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
                         stroke="currentColor"
-                        class="h-6 w-6"
-                        x-tooltip="tooltip"
                       >
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                          stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                         />
                       </svg>
-                    </a>
+                    </div>
                   </div>
                 </td>
-              </tr>;
-            {/* })} */}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
