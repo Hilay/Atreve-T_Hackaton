@@ -4,11 +4,11 @@ import React, { useState } from "react";
 
 function CampForm() {
   const [formValues, setFormValues] = useState({
-    idCampaign: 8,
+    idCampaign: 9,
     idInstitution: 3,
-    nombreCampaña: "",
-    descripcion: "",
-    tipoBeneficiario: "",
+    campaignName: "",
+    description: "",
+    beneficiaryType: "",
     startDate: "",
     endDate: "",
     status: "active"
@@ -50,8 +50,8 @@ function CampForm() {
   };
     
   return (
-    <form class="pb-10 pt-10 flex flex-col items-center justify-center bg-white">
-      onSubmit={handleSubmit}
+    <form class="pb-10 pt-10 flex flex-col items-center justify-center bg-white" onSubmit={handleSubmit}>
+      
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">
@@ -72,9 +72,9 @@ function CampForm() {
               <div class="mt-2">
                 <input
                   type="text"
-                  name="nombreCampaña"
-                  id="nombreCampaña"
-                  value={formValues.nombreCampaña}
+                  name="campaignName"
+                  id="campaignName"
+                  value={formValues.campaignName}
                   onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -90,9 +90,9 @@ function CampForm() {
               </label>
               <div class="mt-2">
                 <textarea
-                  id="descripcion"
-                  name="descripcion"
-                  value={formValues.descripcion}
+                  id="description"
+                  name="description"
+                  value={formValues.description}
                   onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -108,9 +108,9 @@ function CampForm() {
               </label>
               <div class="mt-2">
                 <input
-                  id="tipoBeneficiario"
-                  name="tipoBeneficiario"
-                  value={formValues.tipoBeneficiario}
+                  id="beneficiaryType"
+                  name="beneficiaryType"
+                  value={formValues.beneficiaryType}
                   onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
