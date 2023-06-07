@@ -34,7 +34,7 @@ function CampaignsTable() {
       </a>
 
       {/* CampaignTables */}
-      {/* <TableC data={campaigns}/> */}
+      <TableC data={campaigns}/>
     </div>
   );
 }
