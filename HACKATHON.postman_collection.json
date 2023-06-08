@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "86574bee-4420-4038-918e-b275ad354a04",
+		"name": "HACKATHON",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18554278"
+	},
+	"item": [
+		{
+			"name": "CREACION DE CAMPAÑAS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idCampaign\": 12,\n    \"idInstitution\": 3,\n    \"campaignName\": \"Campaign Name\",\n    \"description\": \"Campaign Description\",\n    \"beneficiaryType\": \"Beneficiary Type\",\n    \"startDate\": \"2023-01-01\",\n    \"endDate\": \"2023-12-31\",\n    \"status\": \"active\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/createCampaign",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"createCampaign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ACTUALIZAR UNA CAMPAÑA MEDIANTE EL ID DE CAMPAÑA",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idInstitution\": 4,\n    \"campaignName\": \"Updated Campaign Name 4\",\n    \"description\": \"Updated Campaign Description 4\",\n    \"beneficiaryType\": \"Updated Beneficiary Type 4\",\n    \"startDate\": \"2023-02-01\",\n    \"endDate\": \"2023-12-31\",\n    \"status\": \"closed\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/updateCampaignByCampaignID/12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"updateCampaignByCampaignID",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LISTAR LAS CAMPAÑAS ACTIVAS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/active/getActiveCampaign",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"active",
+						"getActiveCampaign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LISTAR LAS CAMPAÑAS CERRADAS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/closed/getClosedCampaigns",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"closed",
+						"getClosedCampaigns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DONACIONES POR RECOGER DADA UNA CAMPAÑA ABIERTA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/active/donationsForPickupByCampaignID/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"active",
+						"donationsForPickupByCampaignID",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DONACIONES RECOGIDAS DADA UNA CAMPAÑA ABIERTA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/active/donationsCollectedByCampaignID/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"active",
+						"donationsCollectedByCampaignID",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ACTUALIZAR EL ESTADO DE UNA DONACION MEDIANTE EL ID DE DONACION",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"RECIBIDA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/updateDonationStatusByDonationID/6cGBMimPih19hGte5xLr",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"updateDonationStatusByDonationID",
+						"6cGBMimPih19hGte5xLr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OBTENER TODAS LAS DONACIONES DE UNA CAMPAÑA CERRADA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/campaigns/closed/allDonationsByCampaignID/12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"campaigns",
+						"closed",
+						"allDonationsByCampaignID",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREACION DE UNA DONACION",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"campaign_id\": \"12\",\n  \"description\": \"Donation for Campaign\",\n  \"donationDate\": \"2023-06-10\",\n  \"quantity\": 10,\n  \"isAnonymous\": \"yes\",\n  \"user_id\": \"9XCARxPwYIw2AJnlU10R\",\n  \"pickupDateTime\": \"2023-06-15T15:30:00Z\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/createDonation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"createDonation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREACION DE UNA INSTITUCION",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idInstitution\": 6,\n    \"firstName\": \"Institution\",\n    \"firstLastName\": \"First\",\n    \"secondLastName\": \"Last\",\n    \"nit\": \"123456789\",\n    \"representative\": \"Representative Name\",\n    \"email\": \"institution@example.com\",\n    \"phone\": \"1234567890\",\n    \"mobile\": \"1234567890\",\n    \"address\": \"Institution Address\",\n    \"location\": \"Institution Location\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/institutions/createInstitution",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"institutions",
+						"createInstitution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREACION DE UN USUARIO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"CI\": \"99999\",\n  \"donations\": [],\n  \"email\": \"test9@test.com\",\n  \"fullName\": \"Test User 9\",\n  \"location\": \"Test Location 9\",\n  \"phone\": \"12345678909999\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/createUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"createUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OBTENER DONACIONES DE UN USUARIO MEDIANTE EL ID DE USUARIO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/getAllUserDonationsByUserID/9XCARxPwYIw2AJnlU10R",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"getAllUserDonationsByUserID",
+						"9XCARxPwYIw2AJnlU10R"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REPORTE DE DONACIONES DADA UNA FECHA DE INICIO Y UNA DE CIERRE POR EL ID DE CAMPAÑA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2023-06-11\",\n    \"endDate\": \"2023-06-20\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/reports/donations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reports",
+						"donations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REPORTE DESCENDENTE DE TODAS LAS DONACIONES DE UNA CAMPAÑA ABIERTA MEDIANTE EL ID DE CAMPAÑA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/reports/getCampaignDonationDescendent/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reports",
+						"getCampaignDonationDescendent",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

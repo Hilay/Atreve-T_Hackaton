@@ -1,11 +1,11 @@
 // File: ./pages/api/users/makeDonation.js
-import { db, collection } from '../../../../lib/firebase';
+import { db, collection } from '../../../lib/firebase';
 import { addDoc } from 'firebase/firestore';
 
 export default async (req, res) => {
   if (req.method === 'POST') {
     try {
-      const { campaign_id, description, donationDate, quantity, status, isAnonymous, user_id } = req.body;
+      const { campaign_id, description, donationDate, quantity, isAnonymous, user_id, pickupDateTime } = req.body;
       
       const donationsRef = collection(db, 'donations');
       const newDonation = await addDoc(donationsRef, {
@@ -13,9 +13,10 @@ export default async (req, res) => {
         description,
         donationDate,
         quantity,
-        status,
+        status: 'POR RECOGER',
         user_id,
-        isAnonymous
+        isAnonymous,
+        pickupDateTime
       });
 
       res.status(200).json({ message: 'Donation made successfully', donationId: newDonation.id });

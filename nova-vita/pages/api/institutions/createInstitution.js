@@ -1,4 +1,4 @@
-import { pool } from '../../../../lib/mysql';
+import { pool } from '../../../lib/mysql';
 
 export default async (req, res) => {
     if (req.method === 'POST') {

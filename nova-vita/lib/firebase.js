@@ -4,7 +4,10 @@ import {
     collection, 
     query, 
     where, 
-    getDocs 
+    orderBy,
+    getDocs, 
+    doc, 
+    updateDoc
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
@@ -23,4 +26,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { db, collection, query, where, getDocs, storage };
+export { db, collection, query, where, orderBy, getDocs, doc, updateDoc, storage };
