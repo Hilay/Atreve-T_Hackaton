@@ -2,6 +2,7 @@
 import React from "react";
 import TableC from "../components/TableC"
 import { useEffect, useState } from "react";
+import TabC from "../components/TabC";
 
 function CampaignsTable() {
 
@@ -9,7 +10,7 @@ function CampaignsTable() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      fetch("http://localhost:3000/api/campaigns/closed/closed")
+      fetch("http://localhost:3000/api/campaigns/closed/getClosedCampaigns")
         .then((response) => response.json())
         .then((data) => {
           setCampaigns(data);
@@ -20,6 +21,7 @@ function CampaignsTable() {
   
   return (
     <div>
+      <TabC/>
       <TableC dataC={campaigns}/>
     </div>
   );
