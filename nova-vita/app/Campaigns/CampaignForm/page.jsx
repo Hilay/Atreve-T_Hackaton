@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import { storage } from "../../lib/firebase.js";
+import { storage } from "../../../lib/firebase.js";
 import { ref, uploadBytes } from "firebase/storage";
 
 function CampForm() {

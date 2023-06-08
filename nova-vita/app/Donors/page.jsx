@@ -80,7 +80,7 @@ function Donors() {
             ) : (
               donors.map((d) => (
                 <tr className="hover:bg-gray-50" key={d.id}>
-                  <td className="px-6 py-4 text-center">nombre</td>
+                  <td className="px-6 py-4 text-center">{d.Name}</td>
                   <td className="px-6 py-4 text-center">
                     <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-red-600">
                       No entregado
@@ -89,11 +89,11 @@ function Donors() {
                   <td className="px-6 py-4 text-center">{d.description}</td>
                   <td className="px-6 py-4 text-center">
                     <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-red-600">
-                      12
+                      {d.quantity}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-center">12-02-2023</td>
-                  <td className="px-6 py-4 text-center">13:20 | 12-02-2023</td>
+                  <td className="px-6 py-4 text-center">{d.donationDate}</td>
+                  <td className="px-6 py-4 text-center">{d.pickupDateTime.slice(0, 10)} | {d.pickupDateTime.slice(11, 16)}</td>
                 </tr>
               ))
             )}

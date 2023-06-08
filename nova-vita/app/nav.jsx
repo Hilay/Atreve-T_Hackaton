@@ -9,7 +9,7 @@ const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Asilos", href: "/NursingHome", current: false },
   { name: "Campañas", href: "Campaigns", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Reportes", href: "/Reports", current: false },
 ];
 
 function classNames(...classes) {
