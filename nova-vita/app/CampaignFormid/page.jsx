@@ -1,24 +1,39 @@
-'use client';
+"use client";
 import React, { useState } from "react";
-import { storage } from "../../../lib/firebase.js";
+import { storage } from "../../lib/firebase.js";
 import { ref, uploadBytes } from "firebase/storage";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 function CampForm() {
+  const params = useSearchParams();
+  const [camp, setCampaign] = useState({});
   const [formValues, setFormValues] = useState({
-    idCampaign: 11,
-    idInstitution: 3,
     campaignName: "",
     description: "",
     beneficiaryType: "",
     startDate: "",
-    endDate: "",
-    status: "active",
-    // Agrega más campos aquí según sea necesario
+    endDate: ""
   });
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/test/${params.get("id")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setCampaign(data.campaign);
+        setFormValues({
+          campaignName: data.campaign.campaignName,
+          description: data.campaign.description,
+          beneficiaryType: data.campaign.beneficiaryType,
+          startDate: data.campaign.startDate,
+          endDate: data.campaign.endDate
+        });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
 
-  // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     setFormValues({
       ...formValues,
@@ -84,7 +99,6 @@ function CampForm() {
                   name="campaignName"
                   id="campaignName"
                   value={formValues.campaignName}
-                  onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

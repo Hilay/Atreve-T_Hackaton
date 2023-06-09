@@ -66,6 +66,12 @@ function Donors() {
               >
                 Fecha/Hora de Recojo
               </th>
+              <th
+                scope="col"
+                class="px-6 py-4 font-medium text-gray-900 text-center"
+              >
+                Actualizar estado!
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -83,7 +89,7 @@ function Donors() {
                   <td className="px-6 py-4 text-center">{d.Name}</td>
                   <td className="px-6 py-4 text-center">
                     <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-red-600">
-                      No entregado
+                      {d.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">{d.description}</td>
