@@ -153,7 +153,7 @@ function CampForm() {
                       name="file-upload"
                       type="file"
                       multiple
-                      accept="image/*"
+                      accept=".jpg"
                       onChange={(event) =>
                         setImagenesCarrucel(event.target.files)
                       }

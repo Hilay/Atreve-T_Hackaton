@@ -1,12 +1,50 @@
-'use client';
+"use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 
 function Login() {
   const router = useRouter();
 
-  const handleSubmit = async (req, res) => {
-    router.push("/");
+  useEffect(() => {
+    localStorage.setItem("Institution", "")
+  },[]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const data = {
+      email: email,
+      nit: password,
+    };
+
+    fetch("http://localhost:3000/api/institutions/loginInstitution", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          confirm("Login fallido");
+        }
+      })
+      .then((responseData) => {
+        localStorage.setItem("Institution", responseData.idInstitution);
+        confirm(responseData.idInstitution);
+        router.push("/Campaigns");
+      })
+      .catch((error) => {
+        confirm("Error:", error);
+        // Manejar el error o mostrar un mensaje al usuario según sea necesario
+      });
   };
 
   return (
@@ -63,11 +101,11 @@ function Login() {
 
           <div>
             <button
-              onClick={(event) => handleSubmit()}
+              onClick={handleSubmit}
               type="submit"
               className="flex w-full justify-center rounded-md bg-nova-secondary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-nova-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Login
             </button>
           </div>
         </form>

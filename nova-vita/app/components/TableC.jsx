@@ -5,6 +5,8 @@ function TableG({ dataC }) {
   const router = useRouter();
   const path = usePathname();
 
+  console.log(dataC);
+
   const ChargeDonations = (id) => {
     router.push(`/Donors?id=${id}`);
   };
@@ -76,9 +78,9 @@ function TableG({ dataC }) {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    {campaign.startDate.slice(0, 10)}
+                    {campaign.startDate?.slice(0, 10)}
                   </td>
-                  <td className="px-6 py-4">{campaign.endDate.slice(0, 10)}</td>
+                  <td className="px-6 py-4">{campaign.endDate?.slice(0, 10)}</td>
                   <td class="py-3 px-6 text-center">
                     <div class="flex item-center justify-center">
                       <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
