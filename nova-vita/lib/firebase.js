@@ -7,7 +7,8 @@ import {
     orderBy,
     getDocs, 
     doc, 
-    updateDoc
+    updateDoc,
+    addDoc
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, listAll } from "firebase/storage";
 
@@ -26,4 +27,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { db, collection, query, where, orderBy, getDocs, doc, updateDoc, storage, listAll };
+export { db, collection, query, where, orderBy, getDocs, doc, updateDoc, addDoc, storage, listAll };

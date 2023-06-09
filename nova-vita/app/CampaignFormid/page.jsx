@@ -27,6 +27,7 @@ function CampForm() {
       .then((data) => {
         setCampaign(data.campaign);
         setFormValues({
+          idInstitution: data.campaign.idInstitution,
           campaignName: data.campaign.campaignName,
           description: data.campaign.description,
           beneficiaryType: data.campaign.beneficiaryType,
