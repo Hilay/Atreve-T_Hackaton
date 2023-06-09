@@ -27,7 +27,15 @@ function TableG({ dataC }) {
     router.push(`/CampaignFormid?id=${id}`);
   };
 
-  const updateCampaignStatus = (id, texto) => {
+  const updateCampaignStatus = (
+    id,
+    idInstitution,
+    nombre,
+    description,
+    beneficiaryType,
+    startDate,
+    endDate
+  ) => {
     // Indica que la actualización está en curso
     setUpdating(true);
 
@@ -36,7 +44,15 @@ function TableG({ dataC }) {
       `http://localhost:3000/api/campaigns/updateCampaignByCampaignID/${id}`,
       {
         method: "PUT",
-        body: JSON.stringify({ status: texto }), // Puedes ajustar los datos que necesitas enviar
+        body: JSON.stringify({
+          status: "closed",
+          idInstitution: idInstitution,
+          campaignName: nombre,
+          description: description,
+          beneficiaryType: beneficiaryType,
+          startDate: startDate,
+          endDate: endDate,
+        }), // Puedes ajustar los datos que necesitas enviar
         headers: {
           "Content-Type": "application/json",
         },
@@ -44,28 +60,32 @@ function TableG({ dataC }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        // Aquí puedes realizar acciones adicionales después de la actualización
-        //console.log("Actualización exitosa:", data);
         confirm("Todo bien :D");
 
-        // Actualiza el estado de la donación en la tabla
-        const updatedData = donors.map((donor) => {
-          if (donor.id === id) {
+        const updatedData = dataC.map((campaign) => {
+          if (campaign.id === id) {
             return {
-              ...donor,
+              ...campaign,
 
-              status: texto,
+              status: "closed",
+              idInstitution: idInstitution,
+              campaignName: nombre,
+              description: description,
+              beneficiaryType: beneficiaryType,
+              startDate: startDate,
+              endDate: endDate,
             };
           } else {
-            return donor;
+            return campaign;
           }
         });
-
-        setUpdatedDonors(updatedData);
+        confirm("Todo bien :D 2");
+        setCampaignStates(updatedData);
       })
       .catch((error) => {
         // Manejo de errores en caso de que la actualización falle
         console.error("Error al actualizar:", error);
+        confirm("Todo mal D:");
       })
       .finally(() => {
         // Indica que la actualización ha terminado
@@ -157,8 +177,17 @@ function TableG({ dataC }) {
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                           onClick={() => {
-                            updateCampaignStatus(campaign.idCampaign, "closed");
+                            updateCampaignStatus(
+                              campaign.idCampaign,
+                              campaign.idInstitution,
+                              campaign.campaignName,
+                              campaign.description,
+                              campaign.beneficiaryType,
+                              campaign.startDate,
+                              campaign.endDate
+                            );
                           }}
+                          disabled={updating}
                         >
                           <path
                             stroke-linecap="round"
