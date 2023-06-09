@@ -66,6 +66,12 @@ function Donors() {
               >
                 Fecha/Hora de Recojo
               </th>
+              <th
+                scope="col"
+                class="px-6 py-4 font-medium text-gray-900 text-center"
+              >
+                Actualizar estado!
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -94,6 +100,13 @@ function Donors() {
                   </td>
                   <td className="px-6 py-4 text-center">12-02-2023</td>
                   <td className="px-6 py-4 text-center">13:20 | 12-02-2023</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded m-3"
+                      onClick={() => {}}
+                    ></button>
+                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"></button>
+                  </td>
                 </tr>
               ))
             )}

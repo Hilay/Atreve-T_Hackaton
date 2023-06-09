@@ -1,8 +1,64 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Map from "../components/Map/map";
 
 function Nursing() {
+  const [markerPosition, setMarkerPosition] = useState({ lat: 0, lng: 0 });
+
+  const handleMarkerPositionChange = (position) => {
+    setMarkerPosition(position);
+  };
+
+  const [formValues, setFormValues] = useState({
+    idInstitution: 12,
+    firstName: "",
+    firstLastName: "",
+    secondLastName: "",
+    nit: "",
+    representative: "",
+    email: "",
+    phone: "",
+    mobile: "",
+    address: "",
+    location: "",
+  });
+
+  // Función para manejar cambios en los campos del formulario
+  const handleChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // Función para manejar el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Enviar los datos a la base de datos
+    fetch("http://localhost:3000/api/institutions/createInstitution", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        confirm("pisitivo");
+        // Realizar acciones después de enviar los datos a la base de datos
+        console.log("Datos enviados exitosamente:", data);
+        // Restablecer los valores del formulario si es necesario
+      })
+      .catch((error) => {
+        confirm("algo salio mal");
+        console.error("Error al enviar los datos:", error);
+        // Manejar el error de acuerdo a tus necesidades
+      });
+  };
   return (
-    <form className="flex flex-col items-center justify-center h-screen bg-white">
+    <form
+      className="flex flex-col items-center justify-center h-screen bg-white  pt-[70px] mb-[70px]"
+      onSubmit={handleSubmit}
+    >
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -13,25 +69,27 @@ function Nursing() {
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div className="sm:col-span-4">
+            <div className="sm:col-span-4">
               <label
-                for="email"
+                for="firstName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Nombre / Razon Social
               </label>
               <div className="mt-2">
                 <input
-                  id="razonSocial"
-                  name="razonSocial"
+                  id="firstName"
+                  name="firstName"
                   type="text"
+                  value={formValues.firstName}
+                  onChange={handleChange}
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
             <div className="sm:col-span-3">
               <label
-                for="first-name"
+                for="representative"
                 className="pl-3 block text-sm font-medium leading-6 text-gray-900"
               >
                 Nombre Representate
@@ -39,9 +97,10 @@ function Nursing() {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
-                  autocomplete="given-name"
+                  name="representative"
+                  id="representative"
+                  value={formValues.representative}
+                  onChange={handleChange}
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -49,7 +108,7 @@ function Nursing() {
 
             <div className="sm:col-span-3">
               <label
-                for="last-name"
+                for="nit"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 NIT
@@ -57,8 +116,10 @@ function Nursing() {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="nit"
+                  id="nit"
+                  value={formValues.nit}
+                  onChange={handleChange}
                   autocomplete="family-name"
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -77,6 +138,8 @@ function Nursing() {
                   id="email"
                   name="email"
                   type="email"
+                  value={formValues.email}
+                  onChange={handleChange}
                   autocomplete="email"
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -85,7 +148,7 @@ function Nursing() {
 
             <div className="col-span-full">
               <label
-                for="street-address"
+                for="address"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Direccion
@@ -93,9 +156,11 @@ function Nursing() {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="street-address"
-                  id="street-address"
-                  autocomplete="street-address"
+                  name="address"
+                  id="address"
+                  value={formValues.address}
+                  onChange={handleChange}
+                  autocomplete="address"
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -103,7 +168,7 @@ function Nursing() {
 
             <div className="sm:col-span-2">
               <label
-                for="region"
+                for="phone"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Celular
@@ -111,9 +176,11 @@ function Nursing() {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="region"
-                  id="region"
-                  autocomplete="address-level1"
+                  name="phone"
+                  id="phone"
+                  value={formValues.phone}
+                  onChange={handleChange}
+                  autocomplete="phone"
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -121,7 +188,7 @@ function Nursing() {
 
             <div className="sm:col-span-2">
               <label
-                for="postal-code"
+                for="mobile"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Telefono
@@ -129,9 +196,11 @@ function Nursing() {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autocomplete="postal-code"
+                  name="mobile"
+                  id="mobile"
+                  value={formValues.mobile}
+                  onChange={handleChange}
+                  autocomplete="mobile"
                   className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -139,7 +208,16 @@ function Nursing() {
           </div>
         </div>
       </div>
-
+      <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+      <input
+        type="hidden"
+        name="mobile"
+        id="mobile"
+        value={markerPosition[0] + " " + markerPosition[1]}
+        onChange={handleChange}
+        autocomplete="mobile"
+        className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
           type="button"
