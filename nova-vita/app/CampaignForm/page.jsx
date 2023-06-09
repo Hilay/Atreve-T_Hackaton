@@ -13,7 +13,6 @@ function CampForm() {
 
   const [imagenesCarrucel, setImagenesCarrucel] = useState(null);
   const [formValues, setFormValues] = useState({
-    idCampaign: 26,
     idInstitution: id,
     campaignName: "",
     description: "",

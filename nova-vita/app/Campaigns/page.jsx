@@ -13,7 +13,7 @@ function CampaignsTable() {
   /* confirm(inst); */
 
   useEffect(() => {
-    confirm(localStorage.getItem("Institution"))
+    confirm(localStorage.getItem("Institution"));
     if (typeof window !== "undefined") {
       fetch(`http://localhost:3000/api/campaigns/active/${localStorage.getItem("Institution")}`)
         .then((response) => response.json())
@@ -28,7 +28,7 @@ function CampaignsTable() {
       
       <TabC/>
       {/* CampaignTables */}
-      <TableC dataC={campaigns} />
+      <TableC dataC={campaigns} tipo="activo"/>
     </div>
   );
 }
