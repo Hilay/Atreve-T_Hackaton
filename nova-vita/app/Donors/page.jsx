@@ -1,11 +1,21 @@
 "use client";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 function Donors() {
   const params = useSearchParams();
   const [donors, setDonors] = useState([]);
+  const [updating, setUpdating] = useState(false);
+  const router = useRouter();
+
+  const ChargeDonations = (id) => {
+    confirm("entre");
+    router.push(`/Donors?id=${id}`);
+    //router.reload();
+    //router.refresh();
+    //router.back();
+  };
 
   useEffect(() => {
     fetch(
@@ -21,6 +31,56 @@ function Donors() {
         alert(error);
       });
   }, []);
+
+  const updateDonationStatus = (id, texto, idcam) => {
+    //confirm(id);
+    //confirm(texto);
+    confirm(idcam);
+    // Indica que la actualización está en curso
+    setUpdating(true);
+
+    // Realiza la llamada a la API para actualizar el estado de la donación
+    fetch(
+      `http://localhost:3000/api/campaigns/updateDonationStatusByDonationID/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ status: texto }), // Puedes ajustar los datos que necesitas enviar
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Aquí puedes realizar acciones adicionales después de la actualización
+        console.log("Actualización exitosa:", data);
+        //confirm("Todo bien :D");
+
+        // Actualiza el estado de la donación en la tabla
+        const updatedData = donors.map((donor) => {
+          if (donor.id === id) {
+            return {
+              ...donor,
+
+              status: texto,
+            };
+          } else {
+            return donor;
+          }
+        });
+
+        setUpdatedDonors(updatedData);
+      })
+      .catch((error) => {
+        // Manejo de errores en caso de que la actualización falle
+        console.error("Error al actualizar:", error);
+      })
+      .finally(() => {
+        // Indica que la actualización ha terminado
+        setUpdating(false);
+      });
+    //ChargeDonations(idcam);
+  };
 
   return (
     <div>
@@ -99,7 +159,26 @@ function Donors() {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-center">{d.donationDate}</td>
-                  <td className="px-6 py-4 text-center">{d.pickupDateTime.slice(0, 10)} | {d.pickupDateTime.slice(11, 16)}</td>
+                  <td className="px-6 py-4 text-center">
+                    {d.pickupDateTime.slice(0, 10)} |{" "}
+                    {d.pickupDateTime.slice(11, 16)}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full m-2"
+                      onClick={() =>
+                        updateDonationStatus(d.id, "EN CAMINO", d.campaign_id)
+                      }
+                      disabled={updating}
+                    ></button>
+                    <button
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full m-2"
+                      onClick={() =>
+                        updateDonationStatus(d.id, "RECIBIDO", d.campaign_id)
+                      }
+                      disabled={updating}
+                    ></button>
+                  </td>
                 </tr>
               ))
             )}

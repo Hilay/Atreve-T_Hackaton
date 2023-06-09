@@ -1,9 +1,21 @@
-import React from "react";
 import { useRouter, usePathname } from "next/navigation";
+import React, { useState } from "react";
 
 function TableG({ dataC }) {
   const router = useRouter();
   const path = usePathname();
+  const [campaignStates, setCampaignStates] = useState(
+    dataC.map((campaign) => campaign.status)
+  );
+
+  const UpdateCampaigndelete = (id, index) => {
+    // Actualiza el estado de la campaña en el estado campaignStates
+    const updatedStates = [...campaignStates];
+    updatedStates[index] = "desactive";
+    setCampaignStates(updatedStates);
+
+    router.push(`/CampaignFormid?id=${id}`);
+  };
 
   const ChargeDonations = (id) => {
     router.push(`/Donors?id=${id}`);
@@ -46,7 +58,7 @@ function TableG({ dataC }) {
             </tr>
           </thead>
           <tbody>
-            {dataC.map((campaign) => {
+            {dataC.map((campaign, index) => {
               return (
                 <tr className="hover:bg-gray-50" key={campaign}>
                   <td className="px-6 py-4">{campaign.campaignName}</td>
@@ -96,6 +108,9 @@ function TableG({ dataC }) {
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
+                          onClick={() => {
+                            UpdateCampaigndelete(campaign.idCampaign, index);
+                          }}
                         >
                           <path
                             stroke-linecap="round"

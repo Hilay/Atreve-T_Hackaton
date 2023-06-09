@@ -1,23 +1,27 @@
 "use client";
-import React, { useState } from "react";
 import { storage } from "../../lib/firebase.js";
 import { ref, uploadBytes } from "firebase/storage";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function CampForm() {
   const params = useSearchParams();
+  const [campaignId, setCampaignId] = useState(null);
   const [camp, setCampaign] = useState({});
   const [formValues, setFormValues] = useState({
     campaignName: "",
     description: "",
     beneficiaryType: "",
     startDate: "",
-    endDate: ""
+    endDate: "",
+    status: "",
   });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/test/${params.get("id")}`)
+    const id = params.get("id");
+    setCampaignId(id);
+
+    fetch(`http://localhost:3000/api/test/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setCampaign(data.campaign);
@@ -26,7 +30,8 @@ function CampForm() {
           description: data.campaign.description,
           beneficiaryType: data.campaign.beneficiaryType,
           startDate: data.campaign.startDate,
-          endDate: data.campaign.endDate
+          endDate: data.campaign.endDate,
+          status: data.campaign.status,
         });
       })
       .catch((error) => {
@@ -51,19 +56,20 @@ function CampForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/api/campaigns/create/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formValues),
-    })
+    fetch(
+      `http://localhost:3000/api/campaigns/updateCampaignByCampaignID/${campaignId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Datos enviados exitosamente:", data);
-        const imageRef = ref(storage, `${formValues.idCampaign}.jpg`);
-        uploadBytes(imageRef, selectedImage);
-        confirm("Imagen subida");
+        console.log("Datos actualizados exitosamente:", data);
+        confirm("Datos actualizados exitosamente");
       })
       .catch((error) => {
         confirm(error.message);
@@ -99,6 +105,7 @@ function CampForm() {
                   name="campaignName"
                   id="campaignName"
                   value={formValues.campaignName}
+                  onChange={handleChange}
                   class="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
