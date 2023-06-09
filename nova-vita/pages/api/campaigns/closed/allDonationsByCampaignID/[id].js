@@ -17,20 +17,20 @@ export default async (req, res) => {
       const donationRef = collection(db, "donations");
       const q = query(donationRef, where("campaign_id", "==", id));
       const querySnapshot = await getDocs(q);
-      const donations = querySnapshot.docs.map((doc) => doc.data());
+      const donations = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
       const updatedDonations = await Promise.all(
         donations.map(async (donation) => {
           if (donation.isAnonymous === "Yes") {
-            return { ...donation, Name: "Anonimo" };
+            return { id: donation.id, ...donation, Name: "Anonimo" };
           } else {
             const userDocRef = doc(db, "users", donation.user_id);
             const userDocSnap = await getDoc(userDocRef);
             if (userDocSnap.exists()) {
               const userData = userDocSnap.data();
-              return { ...donation, Name: userData.fullName };
+              return { id: donation.id, ...donation, Name: userData.fullName };
             } else {
-              return { ...donation };
+              return { id: donation.id, ...donation };
             }
           }
         })
