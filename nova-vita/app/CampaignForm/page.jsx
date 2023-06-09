@@ -1,11 +1,12 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import { storage } from "../../lib/firebase.js";
 import { ref, uploadBytes } from "firebase/storage";
 
 function CampForm() {
+  const [imagenesCarrucel, setImagenesCarrucel] = useState(null);
   const [formValues, setFormValues] = useState({
-    idCampaign: 11,
+    idCampaign: 18,
     idInstitution: 3,
     campaignName: "",
     description: "",
@@ -16,8 +17,6 @@ function CampForm() {
     // Agrega más campos aquí según sea necesario
   });
 
-  const [selectedImage, setSelectedImage] = useState(null);
-
   // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     setFormValues({
@@ -26,17 +25,11 @@ function CampForm() {
     });
   };
 
-  // Función para manejar el cambio de imagen seleccionada
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
-  };
-
   // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/api/campaigns/create/create", {
+    fetch("http://localhost:3000/api/campaigns/createCampaign", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,9 +38,12 @@ function CampForm() {
     })
       .then((response) => response.json())
       .then((data) => {
+        confirm(imagenesCarrucel.length)
         console.log("Datos enviados exitosamente:", data);
-        const imageRef = ref(storage, `${formValues.idCampaign}.jpg`);
-        uploadBytes(imageRef, selectedImage);
+        for (let i = 0; i < imagenesCarrucel.length; i++) {
+          const imageRef = ref(storage, `${formValues.idCampaign}A-${i}.jpg`);
+          uploadBytes(imageRef, imagenesCarrucel[i]);
+        }
         confirm("Imagen subida");
       })
       .catch((error) => {
@@ -156,8 +152,11 @@ function CampForm() {
                       id="file-upload"
                       name="file-upload"
                       type="file"
+                      multiple
                       accept="image/*"
-                      onChange={handleImageChange}
+                      onChange={(event) =>
+                        setImagenesCarrucel(event.target.files)
+                      }
                       class="pl-3 sr-only"
                     />
                   </label>

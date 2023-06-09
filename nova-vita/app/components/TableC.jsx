@@ -51,13 +51,22 @@ function TableG({ dataC }) {
                 <tr className="hover:bg-gray-50" key={campaign}>
                   <td className="px-6 py-4">{campaign.campaignName}</td>
                   <td className="px-6 py-4">{campaign.description}</td>
-                  <td className="flex gap-3 px-6 py-4 font-normal text-gray-900">
-                    <div className="relative h-10 w-10">
-                      <img
-                        className="h-full w-full rounded-full object-cover object-center"
-                        src={`https://firebasestorage.googleapis.com/v0/b/fuerza-g-32ca5.appspot.com/o/${campaign.idCampaign}.jpg?alt=media`}
-                        alt=""
-                      />
+                  <td class="py-3 px-6 text-center">
+                    <div class="flex items-center justify-center">
+                      {(() => {
+                        const imageElements = [];
+                        for (let i = 0; i < 3; i++) {
+                          const imageUrl = `https://firebasestorage.googleapis.com/v0/b/fuerza-g-32ca5.appspot.com/o/${campaign.idCampaign}A-${i}.jpg?alt=media`;
+                          imageElements.push(
+                            <img
+                              class="w-10 h-10 rounded-full border-gray-200 border -m-1 transform hover:scale-125"
+                              src={imageUrl}
+                              onClick={() => window.open(imageUrl, "_blank")}
+                            />
+                          );
+                        }
+                        return imageElements;
+                      })()}
                     </div>
                   </td>
                   <td className="px-6 py-4">{campaign.beneficiaryType}</td>
