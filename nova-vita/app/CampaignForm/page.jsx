@@ -1,13 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { storage } from "../../lib/firebase.js";
 import { ref, uploadBytes } from "firebase/storage";
 
 function CampForm() {
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    const institutionId = localStorage.getItem('Institution');
+    setId(institutionId);
+  }, []);
+
   const [imagenesCarrucel, setImagenesCarrucel] = useState(null);
   const [formValues, setFormValues] = useState({
-    idCampaign: 18,
-    idInstitution: 3,
+    idCampaign: 26,
+    idInstitution: id,
     campaignName: "",
     description: "",
     beneficiaryType: "",
@@ -27,6 +34,7 @@ function CampForm() {
 
   // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
+    formValues.idInstitution = id;
     e.preventDefault();
 
     fetch("http://localhost:3000/api/campaigns/createCampaign", {
