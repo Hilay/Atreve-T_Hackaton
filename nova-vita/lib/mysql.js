@@ -1,14 +1,12 @@
 import { createPool } from "mysql2/promise";
 
 const pool = createPool({
-    host: "univalle.mysql.database.azure.com",
-    user: "univalle",
-    password:"Atrevet2023",
-    port:"3306",
-    database:"KERNEL",
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    port: process.env.MYSQL_PORT,
+    database: process.env.MYSQL_DATABASE,
     ssl: {
-        // DO NOT DO THIS
-        // set up your ca correctly to trust the connection
         rejectUnauthorized: false
       }
 });

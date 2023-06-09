@@ -12,14 +12,14 @@ import {
 import { getStorage, ref, uploadBytes, listAll } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAGfgvDMwIhseF-_ZpHChH_5fp76bVxn_I",
-  authDomain: "fuerza-g-32ca5.firebaseapp.com",
-  databaseURL: "https://fuerza-g-32ca5-default-rtdb.firebaseio.com/",
-  projectId: "fuerza-g-32ca5",
-  storageBucket: "fuerza-g-32ca5.appspot.com",
-  messagingSenderId: "623026114835",
-  appId: "1:623026114835:web:828eeaae39abc3965c8ae6",
-  measurementId: "G-BKQ4FDTD72"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
