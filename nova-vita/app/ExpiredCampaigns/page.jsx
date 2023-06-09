@@ -22,7 +22,7 @@ function CampaignsTable() {
   return (
     <div>
       <TabC/>
-      <TableC dataC={campaigns}/>
+      <TableC dataC={campaigns} tipo="inactivo" />
     </div>
   );
 }

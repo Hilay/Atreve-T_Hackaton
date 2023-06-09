@@ -24,7 +24,7 @@ function CampaignsTable() {
       
       <TabC/>
       {/* CampaignTables */}
-      <TableC dataC={campaigns} />
+      <TableC dataC={campaigns} tipo="activo" />
     </div>
   );
 }

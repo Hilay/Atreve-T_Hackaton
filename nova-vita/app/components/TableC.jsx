@@ -1,7 +1,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-function TableG({ dataC }) {
+function TableG({ dataC, tipo }) {
   const router = useRouter();
   const path = usePathname();
   const [campaignStates, setCampaignStates] = useState(
@@ -75,51 +75,66 @@ function TableG({ dataC }) {
       });
     //ChargeDonations(idcam);
   };
+
+  const isActivo = tipo === "activo";
+  const isInactivo = tipo === "inactivo";
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
-        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Nombre Campaña
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Descripcion
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Imagen
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Tipo de Beneficiario
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Estado
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Fecha Inicio
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Fecha Fin
-              </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataC.map((campaign) => {
+    <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
+      <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
+        <thead className="bg-gray-50">
+          <tr>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Nombre Campaña
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Descripcion
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Imagen
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Tipo de Beneficiario
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Estado
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Fecha Inicio
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Fecha Fin
+            </th>
+            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(dataC) && dataC.length > 0 ? (
+            dataC.map((campaign) => {
               return (
                 <tr className="hover:bg-gray-50" key={campaign}>
                   <td className="px-6 py-4">{campaign.campaignName}</td>
                   <td className="px-6 py-4">{campaign.description}</td>
-                  <td className="flex gap-3 px-6 py-4 font-normal text-gray-900">
-                    <div className="relative h-10 w-10">
-                      <img
-                        className="h-full w-full rounded-full object-cover object-center"
-                        src={`https://firebasestorage.googleapis.com/v0/b/fuerza-g-32ca5.appspot.com/o/${campaign.idCampaign}.jpg?alt=media`}
-                        alt=""
-                      />
+                  <td class="py-3 px-6 text-center">
+                    <div class="flex items-center justify-center">
+                      {(() => {
+                        const imageElements = [];
+                        for (let i = 0; i < 3; i++) {
+                          const imageUrl = `https://firebasestorage.googleapis.com/v0/b/fuerza-g-32ca5.appspot.com/o/${campaign.idCampaign}A-${i}.jpg?alt=media`;
+                          imageElements.push(
+                            <img
+                              class="w-10 h-10 rounded-full border-gray-200 border -m-1 transform hover:scale-125"
+                              src={imageUrl}
+                              onClick={() =>
+                                window.open(imageUrl, "_blank")
+                              }
+                            />
+                          );
+                        }
+                        return imageElements;
+                      })()}
                     </div>
                   </td>
                   <td className="px-6 py-4">{campaign.beneficiaryType}</td>
@@ -129,9 +144,11 @@ function TableG({ dataC }) {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    {campaign.startDate.slice(0, 10)}
+                    {campaign.startDate?.slice(0, 10)}
                   </td>
-                  <td className="px-6 py-4">{campaign.endDate.slice(0, 10)}</td>
+                  <td className="px-6 py-4">
+                    {campaign.endDate?.slice(0, 10)}
+                  </td>
                   <td class="py-3 px-6 text-center">
                     <div class="flex item-center justify-center">
                       <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
@@ -152,27 +169,30 @@ function TableG({ dataC }) {
                           />
                         </svg>
                       </div>
-                      <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          onClick={() => {
-                            updateCampaignStatus(
-                              campaign.idCampaign,
-                            );
-                          }}
-                          disabled={updating}
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </div>
+                      {isActivo && (
+                          <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            onClick={() => {
+                              updateCampaignStatus(
+                                campaign.idCampaign,
+                              );
+                            }}
+                            disabled={updating}
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </div>
+                        )}
+                      {isInactivo && (
                       <div
                         onClick={() => {
                           ChargeDonations(campaign.idCampaign);
@@ -199,15 +219,46 @@ function TableG({ dataC }) {
                           />
                         </svg>
                       </div>
+                       )}
+                       {isActivo && (
+                          <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            onClick={() => {
+                              updateCampaignStatus(
+                                campaign.idCampaign,
+                              );
+                            }}
+                            disabled={updating}
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                          </svg>
+                        </div>
+                        )}
                     </div>
                   </td>
                 </tr>
               );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </>
+            })
+          ) : (
+            <tr>
+              <td colSpan="8" className="px-6 py-4 text-center">
+                No hay campañas disponibles.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </>
   );
 }
 
