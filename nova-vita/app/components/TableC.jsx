@@ -7,6 +7,8 @@ function TableG({ dataC }) {
   const [campaignStates, setCampaignStates] = useState(
     dataC.map((campaign) => campaign.status)
   );
+  //prueba
+  const [updating, setUpdating] = useState(false);
 
   const UpdateCampaigndelete = (id, index) => {
     // Actualiza el estado de la campaña en el estado campaignStates
@@ -25,6 +27,52 @@ function TableG({ dataC }) {
     router.push(`/CampaignFormid?id=${id}`);
   };
 
+  const updateCampaignStatus = (id, texto) => {
+    // Indica que la actualización está en curso
+    setUpdating(true);
+
+    // Realiza la llamada a la API para actualizar el estado de la donación
+    fetch(
+      `http://localhost:3000/api/campaigns/updateCampaignByCampaignID/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ status: texto }), // Puedes ajustar los datos que necesitas enviar
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Aquí puedes realizar acciones adicionales después de la actualización
+        //console.log("Actualización exitosa:", data);
+        confirm("Todo bien :D");
+
+        // Actualiza el estado de la donación en la tabla
+        const updatedData = donors.map((donor) => {
+          if (donor.id === id) {
+            return {
+              ...donor,
+
+              status: texto,
+            };
+          } else {
+            return donor;
+          }
+        });
+
+        setUpdatedDonors(updatedData);
+      })
+      .catch((error) => {
+        // Manejo de errores en caso de que la actualización falle
+        console.error("Error al actualizar:", error);
+      })
+      .finally(() => {
+        // Indica que la actualización ha terminado
+        setUpdating(false);
+      });
+    //ChargeDonations(idcam);
+  };
   return (
     <>
       <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
@@ -58,7 +106,7 @@ function TableG({ dataC }) {
             </tr>
           </thead>
           <tbody>
-            {dataC.map((campaign, index) => {
+            {dataC.map((campaign) => {
               return (
                 <tr className="hover:bg-gray-50" key={campaign}>
                   <td className="px-6 py-4">{campaign.campaignName}</td>
@@ -109,7 +157,7 @@ function TableG({ dataC }) {
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                           onClick={() => {
-                            UpdateCampaigndelete(campaign.idCampaign, index);
+                            updateCampaignStatus(campaign.idCampaign, "closed");
                           }}
                         >
                           <path
