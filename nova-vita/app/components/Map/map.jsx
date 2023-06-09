@@ -17,9 +17,9 @@ function Map({ onMarkerPositionChange }) {
   };
 
   return (
-    <div className="mt-4 map-container">
+    <div className="mt-8 map-container h-20">
       <MapContainer
-        className="map"
+        className="map h-40"
         center={[-17.387635, -66.15582]}
         zoom={15}
         scrollWheelZoom={true}

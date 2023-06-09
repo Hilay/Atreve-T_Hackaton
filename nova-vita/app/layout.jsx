@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full">
       <body className='h-full'>
-        {usePathname() !== '/Login' && <Nav />}
+      {(usePathname() !== '/Login' && usePathname() !== '/NursingHome') && <Nav />}
         <div className="h-full">{children}</div>
       </body>
     </html>

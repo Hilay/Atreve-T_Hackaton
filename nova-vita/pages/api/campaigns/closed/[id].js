@@ -3,9 +3,11 @@ import { pool } from '../../../../lib/mysql';
 export default async (req, res) => {
   if (req.method === 'GET') {
     try {
+      const campaignId = req.query.id;
+
       const [results] = await pool.query(
-        `SELECT * FROM Campaigns WHERE status = ?`,
-        ['closed']
+        `SELECT * FROM Campaigns WHERE idInstitution = ? AND status = ?`,
+        [campaignId, 'closed']
       );
 
       res.status(200).json(results);

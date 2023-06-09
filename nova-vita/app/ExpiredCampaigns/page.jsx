@@ -10,7 +10,7 @@ function CampaignsTable() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      fetch("http://localhost:3000/api/campaigns/closed/getClosedCampaigns")
+      fetch(`http://localhost:3000/api/campaigns/closed/${localStorage.getItem("Institution")}`)
         .then((response) => response.json())
         .then((data) => {
           setCampaigns(data);

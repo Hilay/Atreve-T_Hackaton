@@ -15,7 +15,7 @@ function Donors() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setDonors(data.donations);
+        setDonors(data.donations || []);
       })
       .catch((error) => {
         alert(error);
@@ -75,7 +75,7 @@ function Donors() {
             </tr>
           </thead>
           <tbody>
-            {donors.length === 0 ? (
+          {donors && donors.length === 0 ? (
               <tr>
                 <td colSpan="6">
                   <h1 className="text-center">

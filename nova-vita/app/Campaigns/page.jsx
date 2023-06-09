@@ -15,7 +15,7 @@ function CampaignsTable() {
   useEffect(() => {
     confirm(localStorage.getItem("Institution"))
     if (typeof window !== "undefined") {
-      fetch("http://localhost:3000/api/campaigns/active/getActiveCampaign")
+      fetch(`http://localhost:3000/api/campaigns/active/${localStorage.getItem("Institution")}`)
         .then((response) => response.json())
         .then((data) => {
           setCampaigns(data);
