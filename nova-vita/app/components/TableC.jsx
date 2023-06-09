@@ -28,30 +28,18 @@ function TableG({ dataC }) {
   };
 
   const updateCampaignStatus = (
-    id,
-    idInstitution,
-    nombre,
-    description,
-    beneficiaryType,
-    startDate,
-    endDate
+    id
   ) => {
     // Indica que la actualización está en curso
     setUpdating(true);
 
     // Realiza la llamada a la API para actualizar el estado de la donación
     fetch(
-      `http://localhost:3000/api/campaigns/updateCampaignByCampaignID/${id}`,
+      `http://localhost:3000/api/campaigns/updateCampaignStatusByCampaignID/${id}`,
       {
         method: "PUT",
         body: JSON.stringify({
-          status: "closed",
-          idInstitution: idInstitution,
-          campaignName: nombre,
-          description: description,
-          beneficiaryType: beneficiaryType,
-          startDate: startDate,
-          endDate: endDate,
+          status: "closed"
         }), // Puedes ajustar los datos que necesitas enviar
         headers: {
           "Content-Type": "application/json",
@@ -61,26 +49,20 @@ function TableG({ dataC }) {
       .then((response) => response.json())
       .then((data) => {
         confirm("Todo bien :D");
-
+        
         const updatedData = dataC.map((campaign) => {
           if (campaign.id === id) {
             return {
               ...campaign,
 
               status: "closed",
-              idInstitution: idInstitution,
-              campaignName: nombre,
-              description: description,
-              beneficiaryType: beneficiaryType,
-              startDate: startDate,
-              endDate: endDate,
             };
           } else {
             return campaign;
           }
         });
-        confirm("Todo bien :D 2");
         setCampaignStates(updatedData);
+        confirm("Todo bien :D 2");
       })
       .catch((error) => {
         // Manejo de errores en caso de que la actualización falle
@@ -179,12 +161,6 @@ function TableG({ dataC }) {
                           onClick={() => {
                             updateCampaignStatus(
                               campaign.idCampaign,
-                              campaign.idInstitution,
-                              campaign.campaignName,
-                              campaign.description,
-                              campaign.beneficiaryType,
-                              campaign.startDate,
-                              campaign.endDate
                             );
                           }}
                           disabled={updating}
